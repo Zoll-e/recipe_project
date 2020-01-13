@@ -1,13 +1,14 @@
 package com.deze.recipe_project.model;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = "{recipe}")
 @Entity
 public class Ingredient {
 

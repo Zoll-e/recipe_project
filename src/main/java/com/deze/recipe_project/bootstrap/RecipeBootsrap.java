@@ -1,6 +1,7 @@
 package com.deze.recipe_project.bootstrap;
 
 import com.deze.recipe_project.model.*;
+
 import com.deze.recipe_project.repositories.CategoryRepository;
 import com.deze.recipe_project.repositories.RecipeRepository;
 import com.deze.recipe_project.repositories.UnitOfMeasureRepository;

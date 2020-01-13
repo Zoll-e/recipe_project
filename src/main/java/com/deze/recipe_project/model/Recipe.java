@@ -14,6 +14,7 @@ import java.util.Set;
 @Entity
 public class Recipe {
 
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -57,10 +58,11 @@ public class Recipe {
 
     // set notes + this recipe method
     public void setNotes(Notes notes) {
-        this.notes = notes;
-        notes.setRecipe(this);
+        if (notes != null) {
+            this.notes = notes;
+            notes.setRecipe(this);
+        }
     }
-
     //Add ingredient method
     public  Recipe addIngredient(Ingredient ingredient){
         ingredient.setRecipe(this);

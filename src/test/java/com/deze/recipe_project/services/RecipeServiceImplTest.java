@@ -1,11 +1,14 @@
 package com.deze.recipe_project.services;
 
+import com.deze.recipe_project.converters.RecipeCommandToRecipe;
+import com.deze.recipe_project.converters.RecipeToRecipeCommand;
 import com.deze.recipe_project.model.Recipe;
 import com.deze.recipe_project.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,19 +18,23 @@ import static org.mockito.Mockito.*;
 
 class RecipeServiceImplTest {
 
-
     RecipeServiceImpl recipeService;
+
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
     @BeforeEach
-    void setUp() {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        recipeService = new RecipeServiceImpl(recipeRepository);
-
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
-
     @Test
     void getRecipes() {
 
@@ -43,4 +50,25 @@ class RecipeServiceImplTest {
         verify(recipeRepository, times(1)).findAll();
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
