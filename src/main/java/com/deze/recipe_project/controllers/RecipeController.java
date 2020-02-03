@@ -1,6 +1,7 @@
 package com.deze.recipe_project.controllers;
 
 import com.deze.recipe_project.commands.RecipeCommand;
+import com.deze.recipe_project.model.Difficulty;
 import com.deze.recipe_project.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping("/recipe/{id}/show")
+    @GetMapping("/recipe/{id}/show")
     public String showById (@PathVariable String id, Model model) {
 
         model.addAttribute("recipe", recipeService.findById(new Long(id)));
@@ -26,22 +27,21 @@ public class RecipeController {
 
     }
 
-    @RequestMapping("recipe/new")
+    @GetMapping("recipe/new")
     public String newRecipe(Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
         return "recipe/recipeform";
     }
 
-    @RequestMapping("recipe/{id}/update")
+    @GetMapping("recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
         return "recipe/recipeform";
     }
 
 
-    @PostMapping
-    @RequestMapping("recipe")
+    @PostMapping ("recipe")
     public String saveOrUpdate(@ModelAttribute RecipeCommand command) {
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
 
@@ -49,8 +49,7 @@ public class RecipeController {
 
     }
 
-    @GetMapping
-    @RequestMapping("recipe/{id}/delete")
+    @GetMapping("recipe/{id}/delete")
     public String  deleteRecipe(@PathVariable String id) {
 
         log.debug("Deleting id" + id);

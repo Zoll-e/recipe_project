@@ -62,22 +62,18 @@
                                     <label>Cooktime:</label>
                                     <input type="text" class="form-control" th:field="*{cookTime}"/>
                                 </div>
-                           <!--    <div class="col-md-3 form-group">
+
+                               <div class="col-md-3 form-group">
                                     <label>Difficulty:</label>
                                     <select class="form-control" th:field="*{difficulty}">
-                                        <option th:each="difficultyValue : ${T(guru.springframework.domain.Difficulty).values()}"
-                                                th:value="${difficultyValue.name()}"
-                                                th:text="${difficultyValue.name()}"
+                                        <option th:each="difficultyValue : ${T(com.deze.recipe_project.model.Difficulty).values()}"
+                                                th:value="${difficultyValue}"
+                                                th:text="${difficultyValue.displayValue}"
                                         >val</option>
                                     </select>
-                                    <select class="form-control" th:remove="all">
-                                        <option>Easy</option>
-                                        <option>Medium</option>
-                                        <option>Hard</option>
-                                    </select>
                                 </div>
-                            </div>
-                            -->
+
+
                             </div>
                             <div class="row">
                                 <div class="col-md-3 form-group">
@@ -93,6 +89,8 @@
                                     <input type="text" class="form-control" th:field="*{url}"/>
                                 </div>
                             </div>
+
+                        </div>
                         </div>
                     </div>
 
@@ -103,12 +101,11 @@
                                     <h1 class="panel-title">Ingredients
                                         <span class="btn-group pull-right">
 
-
                                         <a class="btn btn-default" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
                                         </span>
                                     </h1>
                                 </div>
-                                </div>
+
                             </div>
 
 
@@ -131,6 +128,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h1 class="panel-title">Directions</h1>
@@ -149,13 +147,12 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <textarea class="form-control" rows="3" th:field="*{notes.recipeNotes}"></textarea>
+                                    <textarea class="form-control" rows="3" th:text="*{notes.recipeNotes}">dasdsad</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
             </form>
         </div>
     </div>
