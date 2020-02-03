@@ -16,4 +16,7 @@ public interface RecipeService {
 
     @Transactional
     RecipeCommand findCommandById(Long l);
+
+    @Transactional
+    void deleteById(Long l);
 }
