@@ -91,7 +91,7 @@ public class IngredientControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/ingredientform"))
                 .andExpect(model().attributeExists("ingredient"))
-                .andExpect(model().attributeExists("uomList"));
+                .andExpect(model().attributeExists("unitOfMeasureList"));
 
         verify(recipeService, times(1)).findCommandById(anyLong());
 
@@ -111,7 +111,7 @@ public class IngredientControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/ingredientform"))
                 .andExpect(model().attributeExists("ingredient"))
-                .andExpect(model().attributeExists("uomList"));
+                .andExpect(model().attributeExists("unitOfMeasureList"));
     }
 
     @Test

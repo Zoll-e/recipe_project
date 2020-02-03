@@ -60,7 +60,7 @@ public class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("recipe/show"))
+                .andExpect(view().name("recipe/recipeform"))
                 .andExpect(model().attributeExists("recipe"));
     }
 
@@ -77,7 +77,7 @@ public class RecipeControllerTest {
                 .param("description", "some string")
         )
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/recipe/show/2"));
+                .andExpect(view().name("redirect:/recipe/2/show/"));
 
     }
 
