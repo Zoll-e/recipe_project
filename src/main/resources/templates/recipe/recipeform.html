@@ -26,6 +26,12 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h1 class="panel-title">Edit Recipe Information</h1>
+
+                                <span class="btn-group pull-right">
+
+                                        <a class="btn btn-default" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/image'}" role="button">View</a>
+                                        </span>
+                            </h1>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -140,18 +146,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">Notes</h1>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12 form-group">
-                                    <textarea class="form-control" rows="3" th:text="*{notes.recipeNotes}">dasdsad</textarea>
+
+
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h1 class="panel-title">Notes</h1>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <textarea class="form-control" rows="3" th:field="*{notes.recipeNotes}"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                     <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

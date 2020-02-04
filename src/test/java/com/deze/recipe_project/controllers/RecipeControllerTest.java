@@ -40,12 +40,12 @@ public class RecipeControllerTest {
     @Test
     void testGetRecipe() throws Exception {
 
-        Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
-        when(recipeService.findById(anyLong())).thenReturn(recipe);
+        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
 
         mockMvc.perform(get("/recipe/1/show/"))
                 .andExpect(status().isOk())
