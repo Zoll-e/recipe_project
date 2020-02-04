@@ -3,6 +3,7 @@ package com.deze.recipe_project.services;
 import com.deze.recipe_project.commands.RecipeCommand;
 import com.deze.recipe_project.converters.RecipeCommandToRecipe;
 import com.deze.recipe_project.converters.RecipeToRecipeCommand;
+import com.deze.recipe_project.exceptions.NotFoundException;
 import com.deze.recipe_project.model.Recipe;
 import com.deze.recipe_project.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,10 @@ public class RecipeServiceImpl implements RecipeService{
     public Recipe findById (Long l) {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
+
+        if(!recipeOptional.isPresent()) {
+            throw new NotFoundException("Recipe Not Found");
+        }
 
         return recipeOptional.get();
 

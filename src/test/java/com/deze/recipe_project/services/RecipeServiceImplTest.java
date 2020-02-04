@@ -1,16 +1,20 @@
 package com.deze.recipe_project.services;
 
+import com.deze.recipe_project.commands.RecipeCommand;
 import com.deze.recipe_project.converters.RecipeCommandToRecipe;
 import com.deze.recipe_project.converters.RecipeToRecipeCommand;
+import com.deze.recipe_project.exceptions.NotFoundException;
 import com.deze.recipe_project.model.Recipe;
 import com.deze.recipe_project.repositories.RecipeRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+
+import org.junit.jupiter.api.*;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +40,7 @@ class RecipeServiceImplTest {
         recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
     @Test
-    void getRecipes() {
+    void getRecipesTest() {
 
         Recipe recipe = new Recipe();
         HashSet recipeData = new HashSet();
@@ -52,6 +56,25 @@ class RecipeServiceImplTest {
     }
 
     @Test
+    public  void getRecipeCommandByIdTest() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+        RecipeCommand commandById = recipeService.findCommandById(1L);
+
+        assertNotNull(commandById,"Null recipe returned");
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
+    }
+    @Test
     public void testDeleteById() throws Exception {
         //given
         Long idToDelete = Long.valueOf(2L);
@@ -64,8 +87,6 @@ class RecipeServiceImplTest {
         verify(recipeRepository, times(1)).deleteById(anyLong());
 
     }
-
-
 
 
 
