@@ -2,13 +2,16 @@ package com.deze.recipe_project.converters;
 
 import com.deze.recipe_project.commands.CategoryCommand;
 import com.deze.recipe_project.model.Category;
-import com.sun.istack.Nullable;
+import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-@Component
-public class CategoryCommandToCategory implements Converter<CategoryCommand, Category> {
 
+@Component
+public class CategoryCommandToCategory implements Converter<CategoryCommand, Category>{
+
+    @Synchronized
     @Nullable
     @Override
     public Category convert(CategoryCommand source) {
@@ -18,7 +21,6 @@ public class CategoryCommandToCategory implements Converter<CategoryCommand, Cat
 
         final Category category = new Category();
         category.setId(source.getId());
-
         category.setDescription(source.getDescription());
         return category;
     }

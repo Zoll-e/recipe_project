@@ -1,20 +1,18 @@
 package com.deze.recipe_project.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+
 
 @Getter
 @Setter
-@NoArgsConstructor
-@Entity
+@Document
 public class UnitOfMeasure {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String id;
     private String description;
-
-
 }

@@ -1,12 +1,12 @@
 package com.deze.recipe_project.converters;
 
-
 import com.deze.recipe_project.commands.IngredientCommand;
 import com.deze.recipe_project.model.Ingredient;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class IngredientToIngredientCommand implements Converter<Ingredient, IngredientCommand> {
@@ -27,9 +27,7 @@ public class IngredientToIngredientCommand implements Converter<Ingredient, Ingr
 
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setId(ingredient.getId());
-        if (ingredient.getRecipe() != null) {
-            ingredientCommand.setRecipeId(ingredient.getRecipe().getId());
-        }
+
         ingredientCommand.setAmount(ingredient.getAmount());
         ingredientCommand.setDescription(ingredient.getDescription());
         ingredientCommand.setUnitOfMeasure(uomConverter.convert(ingredient.getUnitOfMeasure()));

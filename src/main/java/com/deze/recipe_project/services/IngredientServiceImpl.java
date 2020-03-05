@@ -1,6 +1,5 @@
 package com.deze.recipe_project.services;
 
-
 import com.deze.recipe_project.commands.IngredientCommand;
 import com.deze.recipe_project.converters.IngredientCommandToIngredient;
 import com.deze.recipe_project.converters.IngredientToIngredientCommand;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
 
 @Slf4j
 @Service
@@ -34,11 +32,12 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
+    public IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId) {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
         if (!recipeOptional.isPresent()){
+            //todo impl error handling
             log.error("recipe id not found. Id: " + recipeId);
         }
 
@@ -49,6 +48,7 @@ public class IngredientServiceImpl implements IngredientService {
                 .map( ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
 
         if(!ingredientCommandOptional.isPresent()){
+            //todo impl error handling
             log.error("Ingredient id not found: " + ingredientId);
         }
 
@@ -62,7 +62,7 @@ public class IngredientServiceImpl implements IngredientService {
 
         if(!recipeOptional.isPresent()){
 
-
+            //todo toss error if not found!
             log.error("Recipe not found for id: " + command.getRecipeId());
             return new IngredientCommand();
         } else {
@@ -80,11 +80,11 @@ public class IngredientServiceImpl implements IngredientService {
                 ingredientFound.setAmount(command.getAmount());
                 ingredientFound.setUnitOfMeasure(unitOfMeasureRepository
                         .findById(command.getUnitOfMeasure().getId())
-                        .orElseThrow(() -> new RuntimeException("Unit Of Measure NOT FOUND")));
+                        .orElseThrow(() -> new RuntimeException("UOM NOT FOUND"))); //todo address this
             } else {
                 //add new Ingredient
                 Ingredient ingredient = ingredientCommandToIngredient.convert(command);
-                ingredient.setRecipe(recipe);
+              //  ingredient.setRecipe(recipe);
                 recipe.addIngredient(ingredient);
             }
 
@@ -111,7 +111,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void deleteById(Long recipeId, Long idToDelete) {
+    public void deleteById(String recipeId, String idToDelete) {
 
         log.debug("Deleting ingredient: " + recipeId + ":" + idToDelete);
 
@@ -130,7 +130,7 @@ public class IngredientServiceImpl implements IngredientService {
             if(ingredientOptional.isPresent()){
                 log.debug("found Ingredient");
                 Ingredient ingredientToDelete = ingredientOptional.get();
-                ingredientToDelete.setRecipe(null);
+               // ingredientToDelete.setRecipe(null);
                 recipe.getIngredients().remove(ingredientOptional.get());
                 recipeRepository.save(recipe);
             }

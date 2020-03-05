@@ -1,5 +1,6 @@
 package com.deze.recipe_project.services;
 
+
 import com.deze.recipe_project.model.Recipe;
 import com.deze.recipe_project.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
 
 @Slf4j
 @Service
@@ -23,7 +25,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional
-    public void saveImageFile(Long recipeId, MultipartFile file) {
+    public void saveImageFile(String recipeId, MultipartFile file) {
 
         try {
             Recipe recipe = recipeRepository.findById(recipeId).get();

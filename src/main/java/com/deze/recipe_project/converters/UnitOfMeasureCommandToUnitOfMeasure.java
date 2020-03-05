@@ -1,31 +1,27 @@
 package com.deze.recipe_project.converters;
 
-
 import com.deze.recipe_project.commands.UnitOfMeasureCommand;
 import com.deze.recipe_project.model.UnitOfMeasure;
-import com.sun.istack.Nullable;
 import lombok.Synchronized;
-import org.springframework.stereotype.Component;
-
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
 
 @Component
-public class UnitOfMeasureCommandToUnitOfMeasure implements Converter<UnitOfMeasureCommand, UnitOfMeasure> {
+public class UnitOfMeasureCommandToUnitOfMeasure implements Converter<UnitOfMeasureCommand, UnitOfMeasure>{
 
     @Synchronized
     @Nullable
     @Override
-    public UnitOfMeasure convert (UnitOfMeasureCommand source) {
+    public UnitOfMeasure convert(UnitOfMeasureCommand source) {
         if (source == null) {
             return null;
         }
 
-        final UnitOfMeasure unitOfMeasure = new UnitOfMeasure();
-        unitOfMeasure.setId((source.getId()));
-        unitOfMeasure.setDescription((source.getDescription()));
-        return unitOfMeasure;
+        final UnitOfMeasure uom = new UnitOfMeasure();
+        uom.setId(source.getId());
+        uom.setDescription(source.getDescription());
+        return uom;
     }
-
-
 }

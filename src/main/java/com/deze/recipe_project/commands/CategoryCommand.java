@@ -3,15 +3,12 @@ package com.deze.recipe_project.commands;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.Set;
 
-@Getter
+
 @Setter
+@Getter
 @NoArgsConstructor
 public class CategoryCommand {
-
-    private Long id;
+    private String id;
     private String description;
-    private Set<RecipeCommand> recipes;
-
 }
