@@ -42,7 +42,6 @@ public class ImageServiceImpl implements ImageService {
 
             recipeRepository.save(recipe);
         } catch (IOException e) {
-            //todo handle better
             log.error("Error occurred", e);
 
             e.printStackTrace();

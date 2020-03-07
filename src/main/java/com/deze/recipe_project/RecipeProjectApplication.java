@@ -10,11 +10,5 @@ public class RecipeProjectApplication {
 		SpringApplication.run(RecipeProjectApplication.class, args);
 	}
 
-	// Lombok to reduce boilerplate
-
-
-	//todo
-	//dispatcher servlet to convert to mvc---> deploy on tomcat
-	//108 ---> Project Lombok 
 
 }
