@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+
 @Slf4j
 @Service
 public class IngredientServiceImpl implements IngredientService {
@@ -37,7 +38,6 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
         if (!recipeOptional.isPresent()){
-            //todo impl error handling
             log.error("recipe id not found. Id: " + recipeId);
         }
 
@@ -82,9 +82,7 @@ public class IngredientServiceImpl implements IngredientService {
                         .findById(command.getUnitOfMeasure().getId())
                         .orElseThrow(() -> new RuntimeException("UOM NOT FOUND"))); //todo address this
             } else {
-                //add new Ingredient
                 Ingredient ingredient = ingredientCommandToIngredient.convert(command);
-              //  ingredient.setRecipe(recipe);
                 recipe.addIngredient(ingredient);
             }
 
@@ -94,7 +92,6 @@ public class IngredientServiceImpl implements IngredientService {
                     .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
                     .findFirst();
 
-            //check by description
             if(!savedIngredientOptional.isPresent()){
                 //not totally safe... But best guess
                 savedIngredientOptional = savedRecipe.getIngredients().stream()
@@ -104,7 +101,9 @@ public class IngredientServiceImpl implements IngredientService {
                         .findFirst();
             }
 
-            //to do check for fail
+            IngredientCommand ingredientCommandSaved = ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+            ingredientCommandSaved.setRecipeId(recipe.getId());
+
             return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
         }
 
@@ -119,7 +118,6 @@ public class IngredientServiceImpl implements IngredientService {
 
         if(recipeOptional.isPresent()){
             Recipe recipe = recipeOptional.get();
-            log.debug("found recipe");
 
             Optional<Ingredient> ingredientOptional = recipe
                     .getIngredients()
@@ -128,9 +126,7 @@ public class IngredientServiceImpl implements IngredientService {
                     .findFirst();
 
             if(ingredientOptional.isPresent()){
-                log.debug("found Ingredient");
                 Ingredient ingredientToDelete = ingredientOptional.get();
-               // ingredientToDelete.setRecipe(null);
                 recipe.getIngredients().remove(ingredientOptional.get());
                 recipeRepository.save(recipe);
             }
