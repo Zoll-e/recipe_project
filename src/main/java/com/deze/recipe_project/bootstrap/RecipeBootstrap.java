@@ -4,7 +4,11 @@ import com.deze.recipe_project.model.*;
 import com.deze.recipe_project.repositories.CategoryRepository;
 import com.deze.recipe_project.repositories.RecipeRepository;
 import com.deze.recipe_project.repositories.UnitOfMeasureRepository;
+import com.deze.recipe_project.repositories.reactive.CategoryReactiveRepository;
+import com.deze.recipe_project.repositories.reactive.RecipeReactiveRepository;
+import com.deze.recipe_project.repositories.reactive.UnitOfMeasureReactiveRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -24,6 +28,13 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
+    @Autowired
+    UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
+    @Autowired
+    RecipeReactiveRepository recipeReactiveRepository;
+    @Autowired
+    CategoryReactiveRepository categoryReactiveRepository;
+
     public RecipeBootstrap(CategoryRepository categoryRepository,
                            RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
@@ -34,10 +45,21 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
+
+
         loadCategories();
         loadUom();
+
+
         recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
+
+        log.error("####");
+        log.error("Unit of measure count: " + unitOfMeasureReactiveRepository.count().block().toString());
+        log.error("Category count: " + categoryReactiveRepository.count().block().toString());
+        log.error("Recipe count: " + recipeReactiveRepository.count().block().toString());
+
+
     }
 
     private void loadCategories(){
@@ -267,6 +289,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.setSource("Simply Recipes");
 
         recipes.add(tacosRecipe);
+
         return recipes;
     }
 }
